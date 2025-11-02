@@ -1,0 +1,161 @@
+# AutoFlux-EdgeAI System Configuration
+
+autonomous_vehicle:
+  # Sensor Configuration
+  sensors:
+    lidar:
+      enabled: true
+      update_rate_hz: 10
+      max_range_m: 200
+      num_channels: 64
+    
+    camera:
+      enabled: true
+      resolution: [1920, 1080]
+      fps: 30
+      num_cameras: 4
+    
+    radar:
+      enabled: true
+      update_rate_hz: 20
+      max_range_m: 150
+    
+    gps:
+      enabled: true
+      update_rate_hz: 10
+    
+    imu:
+      enabled: true
+      update_rate_hz: 100
+  
+  # Control Configuration
+  control:
+    mode: assisted  # Options: autonomous, assisted, manual
+    max_speed_mps: 30.0
+    max_acceleration_mps2: 3.0
+    max_deceleration_mps2: 5.0
+    max_steering_angle_deg: 45.0
+    
+  # CAN Bus Configuration
+  can_interface:
+    enabled: true
+    interface: socketcan
+    channel: can0
+    bitrate: 500000
+    
+  # Diagnostic Configuration
+  diagnostics:
+    enabled: true
+    check_interval_s: 1.0
+    fault_tolerance: high
+
+neuroflux:
+  # Model Configuration
+  models:
+    object_detection:
+      model_name: yolov8n
+      model_path: models/yolov8n.onnx
+      confidence_threshold: 0.5
+      nms_threshold: 0.45
+      input_size: [640, 640]
+      
+    semantic_segmentation:
+      model_name: deeplabv3_mobilenet
+      model_path: models/deeplabv3.onnx
+      num_classes: 20
+      input_size: [512, 512]
+      
+    lane_detection:
+      model_name: ufld_lane
+      model_path: models/ufld.onnx
+      input_size: [800, 288]
+  
+  # Hardware Configuration
+  hardware:
+    accelerator: gpu  # Options: gpu, cpu, tpu
+    device_id: 0
+    precision: fp16   # Options: fp32, fp16, int8
+    batch_size: 1
+    num_threads: 4
+    
+  # Preprocessing Configuration
+  preprocessing:
+    normalization:
+      mean: [0.485, 0.456, 0.406]
+      std: [0.229, 0.224, 0.225]
+    resize_method: bilinear
+    
+  # Optimization Configuration
+  optimization:
+    enable_tensorrt: false
+    enable_quantization: false
+    cache_models: true
+    warm_up_iterations: 10
+
+integration:
+  # System Configuration
+  system:
+    name: AutoFlux-EdgeAI
+    version: 1.0.0
+    update_rate_hz: 30
+    
+  # Priority Configuration
+  priority:
+    mode: safety_first  # Options: safety_first, performance, balanced
+    
+  # API Configuration
+  api:
+    enabled: true
+    host: 0.0.0.0
+    port: 8000
+    workers: 4
+    
+  # Data Management Configuration
+  data_management:
+    cache_size_mb: 512
+    buffer_size_frames: 30
+    save_raw_data: false
+    
+  # Monitoring Configuration
+  monitoring:
+    enabled: true
+    log_level: INFO  # Options: DEBUG, INFO, WARNING, ERROR
+    metrics_port: 9090
+    save_logs: true
+    log_directory: logs/
+    
+  # Safety Configuration
+  safety:
+    enable_watchdog: true
+    watchdog_timeout_s: 5.0
+    emergency_stop_enabled: true
+    fallback_mode: manual
+
+# Logging Configuration
+logging:
+  version: 1
+  disable_existing_loggers: false
+  formatters:
+    standard:
+      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: INFO
+      formatter: standard
+      stream: ext://sys.stdout
+    file:
+      class: logging.handlers.RotatingFileHandler
+      level: DEBUG
+      formatter: standard
+      filename: logs/autoflux.log
+      maxBytes: 10485760
+      backupCount: 5
+  loggers:
+    autoflux:
+      level: DEBUG
+      handlers: [console, file]
+      propagate: false
+  root:
+    level: INFO
+    handlers: [console]
