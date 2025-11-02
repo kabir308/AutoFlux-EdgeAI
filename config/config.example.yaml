@@ -1,0 +1,46 @@
+# Example configuration file for AutoFlux-EdgeAI
+# Copy this file to config.yaml and modify as needed
+
+autonomous_vehicle:
+  sensors:
+    lidar:
+      enabled: true
+      update_rate_hz: 10
+    camera:
+      enabled: true
+      resolution: [1920, 1080]
+      fps: 30
+    radar:
+      enabled: true
+    gps:
+      enabled: true
+    imu:
+      enabled: true
+      
+  control:
+    mode: assisted
+    max_speed_mps: 20.0
+    
+  can_interface:
+    enabled: false
+    interface: socketcan
+    channel: can0
+    
+neuroflux:
+  models:
+    object_detection:
+      model_name: yolov8n
+      confidence_threshold: 0.5
+      
+  hardware:
+    accelerator: cpu
+    precision: fp32
+    
+integration:
+  system:
+    update_rate_hz: 30
+  api:
+    enabled: true
+    port: 8000
+  monitoring:
+    log_level: INFO
