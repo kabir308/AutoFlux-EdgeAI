@@ -1,3 +1,8 @@
+---
+layout: default
+title: Architecture
+---
+
 # Architecture AutoFlux-EdgeAI
 
 ## Vue d'ensemble

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Development Guide
+---
+
 # Guide de Développement - AutoFlux-EdgeAI
 
 ## Introduction
