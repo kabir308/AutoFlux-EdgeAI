@@ -93,11 +93,16 @@ class SystemOrchestrator:
             sensor_data = self.sensor_manager.read_all_sensors()
             
             # Step 2: Run diagnostics
+            # Safely serialize sensor data
+            sensors_dict = {}
+            for name, data in sensor_data.items():
+                if data is not None and hasattr(data, '__dict__'):
+                    sensors_dict[name] = data.__dict__
+                else:
+                    sensors_dict[name] = None
+            
             system_state = {
-                "sensors": {
-                    name: data.__dict__ if data else None
-                    for name, data in sensor_data.items()
-                },
+                "sensors": sensors_dict,
                 "control": self.vehicle_controller.get_control_status(),
                 "can_bus": {"connected": True, "error_count": 0},
             }

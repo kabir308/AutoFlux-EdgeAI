@@ -84,6 +84,9 @@ class DataPreprocessor:
         """
         Resize image to target size.
         
+        Note: This is a placeholder implementation that returns a zero array.
+        In production, this should use cv2.resize or similar.
+        
         Args:
             image: Input image
             target_size: Target (height, width)
@@ -97,9 +100,9 @@ class DataPreprocessor:
         if image.shape[:2] == target_size:
             return image
         
-        # Placeholder: return image with target size
-        # In real implementation: cv2.resize(image, (target_w, target_h))
+        # PLACEHOLDER: In production, use: cv2.resize(image, (target_w, target_h))
         logger.debug(f"Resizing image from {image.shape[:2]} to {target_size}")
+        logger.warning("Using placeholder resize - install opencv-python for actual resizing")
         
         # Return simulated resized image
         if len(image.shape) == 3:
