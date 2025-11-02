@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoFlux-EdgeAI - Architecture Unifiée pour Véhicule Autonome et Edge AI</title>
+    <meta name="description" content="Une solution innovante fusionnant VOITURE-AUTONOME-ET-DIAGNOSTIC- et NeuroFlux dans une architecture optimisée pour l'intelligence artificielle embarquée.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292e;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: #24292e;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        section {
+            padding: 3rem 0;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #24292e;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #0366d6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature {
+            border: 2px solid #e1e4e8;
+            padding: 2rem;
+            border-radius: 8px;
+            background: #f6f8fa;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #d1d5da;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .architecture-diagram {
+            background: #f6f8fa;
+            border: 2px solid #e1e4e8;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .architecture-diagram pre {
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .doc-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .doc-link {
+            display: block;
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid #e1e4e8;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #24292e;
+            transition: all 0.3s;
+        }
+
+        .doc-link:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .doc-link h3 {
+            color: #0366d6;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.3rem;
+        }
+
+        .doc-link p {
+            margin: 0;
+            color: #586069;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.3s;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        footer {
+            background: #24292e;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 1rem;
+            border-left: 4px solid #ffc107;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1.1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .stats-grid,
+            .features-grid,
+            .doc-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🚗 AutoFlux-EdgeAI</h1>
+            <p>Architecture Unifiée pour Véhicule Autonome et Edge AI</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#overview">Vue d'Ensemble</a></li>
+            <li><a href="#features">Caractéristiques</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#quickstart">Démarrage</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#documentation">Documentation</a></li>
+            <li><a href="https://github.com/kabir308/AutoFlux-EdgeAI">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section id="overview">
+            <h2>🎯 Vue d'Ensemble</h2>
+            <p>AutoFlux-EdgeAI combine les capacités de diagnostic et de contrôle de véhicules autonomes avec l'intelligence artificielle embarquée (Edge AI) pour créer un système intelligent de gestion et de prise de décision en temps réel.</p>
+            
+            <p>Ce projet représente la fusion des systèmes <strong>VOITURE-AUTONOME-ET-DIAGNOSTIC-</strong> et <strong>NeuroFlux</strong> dans une architecture unifiée, optimisée pour un projet de Maîtrise.</p>
+        </section>
+
+        <section id="features">
+            <h2>✨ Caractéristiques Principales</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>🔍 Diagnostic Intelligent</h3>
+                    <p>Surveillance en temps réel des capteurs et systèmes avec 4 niveaux de sévérité. Détection automatique des anomalies et gestion des erreurs.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🚦 Contrôle Autonome</h3>
+                    <p>3 modes de conduite (Manuel, Assisté, Autonome) avec contraintes de sécurité et système de freinage d'urgence intégré.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🧠 Edge AI</h3>
+                    <p>Inférence en temps réel sur GPU/CPU avec modèles ONNX optimisés. Pipeline de traitement d'images haute performance.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>📡 Multi-Capteurs</h3>
+                    <p>Support complet pour LiDAR, 4 caméras (avant, arrière, gauche, droite), radar, GPS et IMU.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats">
+            <h2>📊 Statistiques du Projet</h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">51</div>
+                    <div class="stat-label">Tests</div>
+                    <div class="stat-value">100% Pass</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Modules Python</div>
+                    <div class="stat-value">~2500 LOC</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Vulnérabilités</div>
+                    <div class="stat-value">CodeQL Verified</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">30Hz</div>
+                    <div class="stat-label">Fréquence</div>
+                    <div class="stat-value">Control Loop</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation">
+            <h2>📦 Installation</h2>
+            
+            <h3>Prérequis</h3>
+            <ul>
+                <li>Python 3.8+</li>
+                <li>pip</li>
+                <li>(Optionnel) GPU CUDA pour accélération</li>
+            </ul>
+
+            <h3>Installation Rapide</h3>
+            <div class="code-block">
+                <pre># Cloner le dépôt
+git clone https://github.com/kabir308/AutoFlux-EdgeAI.git
+cd AutoFlux-EdgeAI
+
+# Installer les dépendances
+pip install -r requirements.txt
+
+# Configurer
+cp config/config.example.yaml config/config.yaml</pre>
+            </div>
+
+            <h3>Installation avec Package</h3>
+            <div class="code-block">
+                <pre>pip install -e .</pre>
+            </div>
+        </section>
+
+        <section id="quickstart">
+            <h2>🚀 Démarrage Rapide</h2>
+            <div class="code-block">
+                <pre>from src.integration import AutoFluxSystem
+
+# Créer le système
+system = AutoFluxSystem(config_path="config/config.yaml")
+
+# Initialiser
+system.initialize()
+
+# Démarrer
+system.start()
+
+# Le système coordonne automatiquement :
+# - Lecture des capteurs
+# - Inférence des modèles NeuroFlux
+# - Décisions de contrôle du véhicule</pre>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <h2>🏗️ Architecture</h2>
+            <div class="architecture-diagram">
+                <pre>
+┌─────────────────────────────────────────────────────────┐
+│               AutoFlux-EdgeAI System                     │
+├─────────────────────────────────────────────────────────┤
+│                                                           │
+│  ┌──────────────────┐      ┌──────────────────┐        │
+│  │  Autonomous      │      │    NeuroFlux     │        │
+│  │  Vehicle Module  │◄────►│  Edge AI Module  │        │
+│  └──────────────────┘      └──────────────────┘        │
+│           │                         │                    │
+│           └────────┬────────────────┘                    │
+│                    │                                     │
+│           ┌────────▼────────┐                           │
+│           │   Integration   │                           │
+│           │     Module      │                           │
+│           └─────────────────┘                           │
+└─────────────────────────────────────────────────────────┘
+                </pre>
+            </div>
+
+            <h3>Modules Principaux</h3>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>Module Véhicule Autonome</h3>
+                    <ul>
+                        <li>Diagnostic des capteurs</li>
+                        <li>Contrôle du véhicule</li>
+                        <li>Interface CAN</li>
+                        <li>Gestion des erreurs</li>
+                    </ul>
+                </div>
+                
+                <div class="feature">
+                    <h3>Module NeuroFlux</h3>
+                    <ul>
+                        <li>Inférence Edge AI</li>
+                        <li>Traitement d'images</li>
+                        <li>Optimisation matérielle</li>
+                        <li>Pipeline de données</li>
+                    </ul>
+                </div>
+                
+                <div class="feature">
+                    <h3>Module d'Intégration</h3>
+                    <ul>
+                        <li>API unifiée</li>
+                        <li>Orchestration</li>
+                        <li>Cache de données</li>
+                        <li>Monitoring système</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="documentation">
+            <h2>📚 Documentation</h2>
+            <div class="doc-links">
+                <a href="getting-started.html" class="doc-link">
+                    <h3>🚀 Guide de Démarrage</h3>
+                    <p>Installation et premiers pas avec AutoFlux-EdgeAI</p>
+                </a>
+                
+                <a href="architecture.html" class="doc-link">
+                    <h3>🏗️ Architecture</h3>
+                    <p>Architecture détaillée et diagrammes du système</p>
+                </a>
+                
+                <a href="api.html" class="doc-link">
+                    <h3>📡 Documentation API</h3>
+                    <p>Guide complet de l'API REST et des interfaces</p>
+                </a>
+                
+                <a href="development.html" class="doc-link">
+                    <h3>👨‍💻 Guide Développeur</h3>
+                    <p>Contribution, développement et bonnes pratiques</p>
+                </a>
+                
+                <a href="packages.html" class="doc-link">
+                    <h3>📦 Packages</h3>
+                    <p>Information sur les packages et dépendances</p>
+                </a>
+            </div>
+        </section>
+
+        <section id="project">
+            <h2>🎓 Projet de Maîtrise</h2>
+            <p>Ce projet a été développé dans le cadre d'un projet de Maîtrise en Ingénierie, démontrant :</p>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>✅ Architecture Logicielle</h3>
+                    <p>Conception modulaire et extensible avec séparation des responsabilités</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>✅ Intégration Systèmes</h3>
+                    <p>Fusion harmonieuse de systèmes complexes et hétérogènes</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>✅ Edge AI</h3>
+                    <p>Optimisations pour l'inférence en temps réel sur matériel embarqué</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>✅ Documentation</h3>
+                    <p>Documentation académique complète et tests exhaustifs</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="links">
+            <h2>🔗 Liens Rapides</h2>
+            <div style="text-align: center; margin: 2rem 0;">
+                <a href="https://github.com/kabir308/AutoFlux-EdgeAI" class="btn">GitHub Repository</a>
+                <a href="https://github.com/kabir308/AutoFlux-EdgeAI/issues" class="btn btn-outline">Issues</a>
+                <a href="https://github.com/kabir308/AutoFlux-EdgeAI/pulls" class="btn btn-outline">Pull Requests</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AutoFlux-EdgeAI | MIT License</p>
+            <p>
+                <a href="https://github.com/kabir308/AutoFlux-EdgeAI">GitHub</a> | 
+                <a href="https://github.com/kabir308/AutoFlux-EdgeAI/blob/main/LICENSE">License</a> | 
+                <a href="https://github.com/kabir308/AutoFlux-EdgeAI/blob/main/README.md">README</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
